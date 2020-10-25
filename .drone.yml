@@ -14,8 +14,6 @@ steps:
   environment:
     subgit:
       from_secret: subgit
-    regs:
-      from_secret: regs
 
   commands:
   - mkdir -p $HOME/.docker/
@@ -49,4 +47,4 @@ steps:
   image: registry.gitlab.com/weezway/deno-https-server
  
 image_pull_secrets:
-- regs
+- dockerconfig
