@@ -3,10 +3,7 @@ name: default
 type: docker
   
 steps:
-- name: clone
-  environment:
-    DRONE_REMOTE_URL:
-      from_secret: subgit
+ 
 - name: test
   image: hayd/alpine-deno:1.4.6
   environment:
