@@ -6,10 +6,6 @@ clone:
   git: 
     image: plugins/git 
     tags: true
-    environment:
-      subgit:
-        from_secret: subgit
-      DRONE_REMOTE_URL=$subgit
 
 steps:
  
@@ -23,9 +19,8 @@ steps:
 
   commands:
   - mkdir -p $HOME/.docker/
-  - ls -l $HOME
   - echo $${regs} > $HOME/.docker/config.json
-  - ls -l $HOME/.docker/config.json
+  - cat $HOME/.docker/config.json
   - apk add git 
   - git clone $subgit
   - deno --version
@@ -52,10 +47,6 @@ steps:
     
 - name: build
   image: registry.gitlab.com/weezway/deno-https-server
-  environment:
-    USERNAME:
-      from_secret: docker_username
-    PASSWORD:
-      from_secret: docker_password
+ 
 image_pull_secrets:
 - regs
