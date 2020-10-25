@@ -43,7 +43,9 @@ steps:
 - name: pull
   image: registry.gitlab.com/weezway/deno-https-server
   commands:
+    - ls -l
     - deno --version
+
  
 image_pull_secrets:
 - dockerconfig
