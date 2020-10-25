@@ -3,7 +3,10 @@ name: default
 type: docker
   
 steps:
-
+- name: clone
+  environment:
+    DRONE_REMOTE_URL:
+      from_secret: subgit
 - name: test
   image: hayd/alpine-deno:1.4.6
   environment:
@@ -35,3 +38,11 @@ steps:
     event:
     - push
     - tag
+    
+- name: build
+  image: registry.gitlab.com/weezway/deno-https-server
+  environment:
+    USERNAME:
+      from_secret: docker_username
+    PASSWORD:
+      from_secret: docker_password
