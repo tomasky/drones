@@ -43,7 +43,7 @@ steps:
 - name: pull
   image: registry.gitlab.com/weezway/deno-https-server
   commands:
-    - ls -l
+    - ls -l /app
     - deno --version
 
  
