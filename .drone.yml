@@ -49,4 +49,4 @@ steps:
     PASSWORD:
       from_secret: docker_password
 image_pull_secrets:
-- dockerconfig
+- regs
