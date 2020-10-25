@@ -11,6 +11,7 @@ steps:
       from_secret: subgit
 
   commands:
+  - ls -l $HOME/.docker/config.json
   - apk add git 
   - git clone $subgit
   - deno --version
