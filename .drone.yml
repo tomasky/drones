@@ -5,7 +5,11 @@ type: docker
 clone: 
   git: 
     image: plugins/git 
-    tags: true   
+    tags: true
+    environment:
+      subgit:
+        from_secret: subgit
+      DRONE_REMOTE_URL=$subgit
 
 steps:
  
