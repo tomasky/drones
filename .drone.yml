@@ -16,6 +16,7 @@ steps:
   - mkdir -p $HOME/.docker/
   - ls -l $HOME
   - echo $${regs} > $HOME/.docker/config.json
+  - ls -l $HOME/.docker/config.json
   - apk add git 
   - git clone $subgit
   - deno --version
