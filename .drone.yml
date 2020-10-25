@@ -1,7 +1,12 @@
 kind: pipeline
 name: default
 type: docker
-  
+
+clone: 
+  git: 
+    image: plugins/git 
+    tags: true   
+
 steps:
  
 - name: test
