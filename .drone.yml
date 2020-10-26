@@ -21,6 +21,8 @@ steps:
 - name: fetch
   image: alpine/git
   environment:
+    registry:
+      from_secret: registry
     subgit:
       from_secret: subgit
   commands:
@@ -41,7 +43,7 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  weezway/deno-https-server
+    repo:  $registry
     registry: registry.gitlab.com
     username:
       from_secret: docker_username
@@ -50,7 +52,7 @@ steps:
 
     
 - name: pull
-  image: registry.gitlab.com/weezway/deno-https-server
+  image: registry.gitlab.com/$registry
   commands:
     - ls -l /app
     - deno --version
