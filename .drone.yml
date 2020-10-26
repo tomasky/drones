@@ -9,7 +9,7 @@ clone:
     environment:
       subgit:
         from_secret: subgit
-    remote: https://github.com/tomasky
+    path: https://github.com/tomasky
     tags: true
 
 steps:
