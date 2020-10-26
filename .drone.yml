@@ -36,7 +36,7 @@ steps:
 
   settings:
     auto_tag: true
-    auto_tag_suffix: latest
+    auto_tag_suffix: deno
     dockerfile: ./denok/Dockerfile
     context: ./denok
     repo:  registry.gitlab.com/weezway/deno-https-server
