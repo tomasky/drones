@@ -41,7 +41,6 @@ steps:
     context: ./denok
     repo:  registry.gitlab.com/weezway/deno-https-server
     registry: registry.gitlab.com
-    repo_branch: deno
     username:
       from_secret: docker_username
     password:
