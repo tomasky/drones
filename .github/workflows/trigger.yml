@@ -26,4 +26,5 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: ${{github.event.client_payload.br}}
+          tagging_message: ${{github.event.client_payload.tag}}
           commit_message: Apply drone changes[${{ github.event.client_payload.br }}]
