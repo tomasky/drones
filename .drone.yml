@@ -8,6 +8,7 @@ clone:
 trigger:
   branch:
     - deno
+    - master
   event:
     include:
       - push
