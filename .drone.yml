@@ -3,7 +3,7 @@ name: default
 type: docker
 
 clone: 
-  disable: false
+  disable: true
  
  
 image_pull_secrets:
@@ -33,7 +33,7 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  weezway/deno-https-server
+    repo:  registry.gitlab.com/weezway/deno-https-server
     registry: registry.gitlab.com
     username:
       from_secret: docker_username
