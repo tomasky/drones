@@ -37,15 +37,17 @@ steps:
 - name: publish
   image: plugins/docker
   environment:
-    registry:
+    REGISTRY:
       from_secret: registry
   settings:
     auto_tag: true
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  registry.gitlab.com/$registry
+    repo:  $REGISTRY
     registry: registry.gitlab.com
+    build_args_from_env:
+      - REGISTRY
     username:
       from_secret: docker_username
     password:
