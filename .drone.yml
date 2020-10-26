@@ -5,7 +5,9 @@ type: docker
 clone: 
   disable: true
  
- 
+trigger:
+  target:
+  - denoa 
 image_pull_secrets:
 - dockerconfig
 
