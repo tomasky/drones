@@ -1,16 +1,12 @@
 kind: pipeline
 name: default
 type: docker
-environment:
-  DRONE_REMOTE_URL: https://
-  subgit:
-      from_secret: subgit
-  
+
 clone: 
   disable: false
 
   git: 
-    image: plugins/git
+    image: plugins/gits
     paths: https://github.com/tomasky
     tags: true
 
