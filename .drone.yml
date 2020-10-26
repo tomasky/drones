@@ -3,7 +3,9 @@ name: default
 type: docker
 
 clone: 
-  disable: false 
+  disable: false
+  environment:
+      DRONE_REMOTE_URL: https://
   git: 
     image: plugins/git
     environment:
