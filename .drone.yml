@@ -14,8 +14,6 @@ trigger:
       - push
       - promote
  
-environment: 
-  registry: registry.gitlab.com/weezway/deno-https-server
 image_pull_secrets:
 - dockerconfig
 
@@ -44,7 +42,7 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  $registry
+    repo:  registry.gitlab.com/weezway/deno-https-server
     registry: registry.gitlab.com
     username:
       from_secret: docker_username
@@ -53,7 +51,7 @@ steps:
 
     
 - name: pull
-  image: $registry
+  image: registry.gitlab.com/weezway/deno-https-server
 
   commands:
     - ls -l /app
