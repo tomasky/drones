@@ -20,7 +20,7 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      - run: sed -i "s/BRANCH_NAME=.*/BRANCH_NAME=${{ github.event.client_payload.ref }}/"   README.md
+      - run: sed -i "s/BRANCH_NAME=.*/BRANCH_NAME=${{ github.event.client_payload.sha }}/"   README.md
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply drone changes
