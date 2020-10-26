@@ -6,6 +6,8 @@ clone:
   disable: true
  
 trigger:
+  event:
+  - push
   target:
   - denoa 
 image_pull_secrets:
