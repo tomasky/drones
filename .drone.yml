@@ -1,0 +1,57 @@
+kind: pipeline
+name: default
+type: docker
+
+clone: 
+  disable: true
+ 
+trigger:
+  event:
+    include:
+      - push
+      - promote
+ 
+image_pull_secrets:
+- dockerconfig
+
+steps:
+- name: fetch
+  image: alpine/git
+  environment:
+    subgit:
+      from_secret: subgit
+
+  commands:
+  #- git fetch --tags
+  - git clone $subgit
+  
+- name: test
+  image: hayd/alpine-deno:1.4.6
+  commands:
+  - deno --version
+  - cd denok && deno cache main.ts
+    
+- name: publish
+  image: plugins/docker
+
+  settings:
+    auto_tag: true
+    auto_tag_suffix: latest
+    dockerfile: ./denok/Dockerfile
+    context: ./denok
+    repo:  registry.gitlab.com/weezway/deno-https-server
+    registry: registry.gitlab.com
+    repo_branch: deno
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+
+    
+- name: pull
+  image: registry.gitlab.com/weezway/deno-https-server
+
+  commands:
+    - ls -l /app
+    - deno --version
+
