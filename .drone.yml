@@ -24,6 +24,8 @@ steps:
   environment:
     subgit:
       from_secret: subgit
+    REGISTRY:
+      from_secret: registry
   commands:
   #- git fetch --tags
   - git clone $subgit
@@ -36,9 +38,7 @@ steps:
     
 - name: publish
   image: plugins/docker
-  environment:
-    REGISTRY:
-      from_secret: registry
+
   settings:
     auto_tag: true
     auto_tag_suffix: latest
@@ -54,7 +54,7 @@ steps:
 
     
 - name: pull
-  image: registry.gitlab.com/$registry
+  image: registry.gitlab.com/$REGISTRY
   environment:
     registry:
       from_secret: registry
