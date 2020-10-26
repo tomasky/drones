@@ -5,6 +5,9 @@ type: docker
 clone: 
   disable: false
  
+ 
+image_pull_secrets:
+- dockerconfig
 
 steps:
 - name: fetch
@@ -47,6 +50,3 @@ steps:
     - ls -l /app
     - deno --version
 
- 
-image_pull_secrets:
-- dockerconfig
