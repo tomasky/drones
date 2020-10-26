@@ -1,11 +1,11 @@
 kind: pipeline
 name: default
 type: docker
-
+environment:
+  DRONE_REMOTE_URL: https://
 clone: 
   disable: false
-  environment:
-      DRONE_REMOTE_URL: https://
+
   git: 
     image: plugins/git
     environment:
