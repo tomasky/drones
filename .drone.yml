@@ -8,10 +8,6 @@ clone:
 
   git: 
     image: plugins/git
-    environment:
-      DRONE_REMOTE_URL: https://
-      subgit:
-        from_secret: subgit
     paths: https://github.com/tomasky
     tags: true
 
