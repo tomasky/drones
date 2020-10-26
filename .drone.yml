@@ -4,23 +4,21 @@ type: docker
 
 clone: 
   disable: false
-
-  git: 
-    image: plugins/gits
-    paths: https://github.com/tomasky
-    tags: true
+ 
 
 steps:
- 
-- name: test
-  image: hayd/alpine-deno:1.4.6
+- name: fetch
+  image: alpine/git
   environment:
     subgit:
       from_secret: subgit
-
   commands:
-  - apk add git 
+  #- git fetch --tags
   - git clone $subgit
+  
+- name: test
+  image: hayd/alpine-deno:1.4.6
+  commands:
   - deno --version
   - cd denok && deno cache main.ts
     
