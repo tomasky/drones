@@ -6,6 +6,8 @@ clone:
   disable: true
  
 trigger:
+  branch:
+    - deno
   event:
     include:
       - push
