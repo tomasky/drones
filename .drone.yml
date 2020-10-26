@@ -14,7 +14,8 @@ trigger:
       - push
       - promote
  
- 
+environment: 
+  registry: registry.gitlab.com/weezway/deno-https-server
 image_pull_secrets:
 - dockerconfig
 
@@ -24,8 +25,7 @@ steps:
   environment:
     subgit:
       from_secret: subgit
-    REGISTRY:
-      from_secret: registry
+
   commands:
   #- git fetch --tags
   - git clone $subgit
@@ -44,17 +44,17 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  registry.gitlab.com/weezway/deno-https-server
+    repo:  $registry
     registry: registry.gitlab.com
-    secrets: [ docker_username, docker_password ]
-
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
 
     
 - name: pull
-  image: registry.gitlab.com/$REGISTRY
-  environment:
-    registry:
-      from_secret: registry
+  image: $registry
+
   commands:
     - ls -l /app
     - deno --version
