@@ -44,10 +44,9 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  $REGISTRY
+    repo:  weezway/deno-https-server
     registry: registry.gitlab.com
-    build_args_from_env:
-      - REGISTRY
+
     username:
       from_secret: docker_username
     password:
