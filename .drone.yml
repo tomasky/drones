@@ -3,13 +3,13 @@ name: default
 type: docker
 
 clone: 
-  disable: true 
+  disable: false 
   git: 
     image: plugins/git
     environment:
       subgit:
         from_secret: subgit
-    remote: $subgit
+    remote: https://github.com/tomasky
     tags: true
 
 steps:
