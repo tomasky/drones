@@ -8,8 +8,7 @@ clone:
 trigger:
   event:
   - push
-  target:
-  - denoa 
+ 
 image_pull_secrets:
 - dockerconfig
 
