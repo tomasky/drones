@@ -38,7 +38,9 @@ steps:
     
 - name: publish
   image: plugins/docker
-  
+  environment:
+    registry:
+      from_secret: registry
   settings:
     auto_tag: true
     auto_tag_suffix: latest
@@ -50,9 +52,7 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-    environment:
-    registry:
-      from_secret: registry
+
     
 - name: pull
   image: registry.gitlab.com/$registry
