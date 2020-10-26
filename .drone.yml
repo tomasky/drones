@@ -3,6 +3,7 @@ name: default
 type: docker
 
 clone: 
+  disable: true 
   git: 
     image: plugins/git
     environment:
