@@ -28,6 +28,7 @@ steps:
       from_secret: subgit
   commands:
   #- git fetch --tags
+  - export REGISTRY=$registry
   - git clone $subgit
   
 - name: test
@@ -44,7 +45,7 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  $registry
+    repo:  $REGISTRY
     registry: registry.gitlab.com
     username:
       from_secret: docker_username
@@ -53,7 +54,7 @@ steps:
 
     
 - name: pull
-  image: registry.gitlab.com/$registry
+  image: registry.gitlab.com/$REGISTRY
   commands:
     - ls -l /app
     - deno --version
