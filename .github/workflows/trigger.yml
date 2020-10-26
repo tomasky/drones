@@ -22,8 +22,8 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.head_ref }}
-      - uses: stefanzweifel/git-auto-commit-action@v4
       - run: sed -i "s/BRANCH_NAME=.*/BRANCH_NAME=${{ github.event.client_payload.sha }}/"   README.md
+      - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           branch: ${{github.event.client_payload.br}}
           commit_message: Apply drone changes[${{ github.event.client_payload.br }}]
