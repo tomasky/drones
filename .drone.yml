@@ -22,8 +22,6 @@ steps:
 - name: fetch
   image: alpine/git
   environment:
-    registry:
-      from_secret: registry
     subgit:
       from_secret: subgit
   commands:
@@ -46,7 +44,7 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  $registry
+    repo:  registry.gitlab.com/$registry
     registry: registry.gitlab.com
     username:
       from_secret: docker_username
