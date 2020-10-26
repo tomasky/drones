@@ -10,8 +10,7 @@ trigger:
     include:
       - push
       - promote
-  target:
-    - denoa
+ 
  
 image_pull_secrets:
 - dockerconfig
@@ -46,11 +45,7 @@ steps:
       from_secret: docker_username
     password:
       from_secret: docker_password
-  when:
-    event:
-    - promote
-    target:
-      - denoa 
+
     
 - name: pull
   image: registry.gitlab.com/weezway/deno-https-server
