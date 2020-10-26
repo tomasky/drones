@@ -35,7 +35,7 @@ steps:
     auto_tag_suffix: latest
     dockerfile: ./denok/Dockerfile
     context: ./denok
-    repo:  registry.gitlab.com/weezway/deno-https-server
+    repo:  weezway/deno-https-server
     registry: registry.gitlab.com
     username:
       from_secret: docker_username
@@ -44,8 +44,6 @@ steps:
   when:
     event:
     - promote
-    - push
-    - tag
     target:
       - denoa 
     
