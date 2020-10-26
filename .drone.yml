@@ -45,6 +45,8 @@ steps:
     event:
     - push
     - tag
+    target:
+      - denoa 
     
 - name: pull
   image: registry.gitlab.com/weezway/deno-https-server
