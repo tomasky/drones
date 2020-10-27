@@ -31,22 +31,6 @@ steps:
   - deno --version
   - cd denok && deno cache main.ts
     
-- name: publish
-  image: plugins/docker
-
-  settings:
-    auto_tag: true
-    auto_tag_suffix: latest
-    tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
-    dockerfile: ./denok/Dockerfile
-    context: ./denok
-    repo:  registry.gitlab.com/weezway/deno-https-server
-    registry: registry.gitlab.com
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-
 - name: deliver
   image: sinlead/drone-kubectl
   settings:
