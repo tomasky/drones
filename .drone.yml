@@ -20,43 +20,15 @@ steps:
   image: alpine/git
   environment:
     subgit:
-      from_secret: subgit
+      from_secret: sbtgit
 
   commands:
   #- git fetch --tags
   - git clone $subgit
   
 - name: test
-  image: hayd/alpine-deno:1.4.6
+  image: amaya382/scala-native-builder 
   commands:
-  - deno --version
-  - cd denok && deno cache main.ts
+  - sbt run 
     
-- name: publish
-  image: plugins/docker
-
-  settings:
-    auto_tag: true
-    auto_tag_suffix: deno
-    tags: [ "${DRONE_COMMIT_SHA:0:7}","latest" ]
-    dockerfile: ./denok/Dockerfile
-    context: ./denok
-    repo:  registry.gitlab.com/weezway/deno-https-server
-    registry: registry.gitlab.com
-    username:
-      from_secret: docker_username
-    password:
-      from_secret: docker_password
-
-- name: deliver
-  image: sinlead/drone-kubectl
-  settings:
-    kubernetes_server:
-      from_secret: k8s_server
-    kubernetes_cert:
-      from_secret: k8s_cert
-    kubernetes_token:
-      from_secret: k8s_token
-  commands:
-  - kubectl apply -f denok/deployment.yml
-    
+   
