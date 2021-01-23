@@ -13,7 +13,7 @@ trigger:
       - promote
  
 image_pull_secrets:
-- dockerconfig
+- labdkjson 
 
 steps:
 - name: fetch
@@ -27,7 +27,7 @@ steps:
   - git clone $subgit source
   
 - name: test
-  image: budtmo/docker-android-x86-11.0 
+  image: registry.gitlab.com/weezway/dkpkgs:android 
   commands:
   - cd source
-  - ./gradlew assembleDebug
+  - gradle assembleDebug
