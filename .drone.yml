@@ -27,7 +27,7 @@ steps:
   - git clone $subgit source
   
 - name: test
-  image: gradle 
+  image: budtmo/docker-android-x86-11.0 
   commands:
   - cd source
-  - gradle assembleDebug
+  - ./gradlew assembleDebug
