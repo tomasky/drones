@@ -27,12 +27,9 @@ steps:
   - git clone $subgit source
   
 - name: test
-  image: amaya382/scala-native-builder 
+  image: jianann/alpine-clang
   commands:
   - cd source
-  - apk update && apk add curl
-  - curl -o some.apk https://dl-cdn.alpinelinux.org/alpine/v3.11/main/x86/clang-9.0.0-r1.apk
-  - apk add some.apk
-  - sbt run 
+  - sh install.sh
     
    
