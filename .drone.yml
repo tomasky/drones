@@ -30,6 +30,6 @@ steps:
   image: jianann/alpine-clang
   commands:
   - cd source
-  - sh install.sh
+  - sh ../install.sh
     
    
