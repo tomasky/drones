@@ -24,11 +24,12 @@ steps:
 
   commands:
   #- git fetch --tags
-  - git clone $subgit
+  - git clone $subgit source
   
 - name: test
   image: amaya382/scala-native-builder 
   commands:
+  - cd source
   - sbt run 
     
    
