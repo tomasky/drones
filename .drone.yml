@@ -31,3 +31,12 @@ steps:
   commands:
   - cd source
   - gradle assembleDebug
+
+- name: publish
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: gh_token
+    files: app/build/outputs/apk/debug/app-debug.apk
+  when:
+    event: tag
