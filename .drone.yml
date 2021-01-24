@@ -37,6 +37,9 @@ steps:
   settings:
     api_key:
       from_secret: gh_token
-    files: app/build/outputs/apk/debug/app-debug.apk
+    files: source/app/build/outputs/apk/debug/app-debug.apk
+  commands:
+  - ls -l
+
   when:
     event: tag
