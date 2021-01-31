@@ -31,8 +31,6 @@ steps:
   commands:
   - cd source
   - gradle assembleDebug
-  when:
-    event: main
 
 - name: publish
   image: plugins/github-release
@@ -40,8 +38,6 @@ steps:
     api_key:
       from_secret: gh_token
     files: source/app/build/outputs/apk/debug/app-debug.apk
-  commands:
-  - ls -l
 
   when:
     event: tag
