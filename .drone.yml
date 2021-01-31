@@ -30,7 +30,7 @@ steps:
   - apt-get update -y
   - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip -y
   - make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=source/nvim install
-  - cfz nvim-master.tar.gz nvim
+  - tar cfz nvim-master.tar.gz nvim
 
 
 - name: publish
