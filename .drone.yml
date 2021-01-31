@@ -27,8 +27,8 @@ steps:
   image: i386/ubuntu:16.04
   commands:
   - cd source
-  - sudo apt-get update -y
-  - sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip -y
+  - apt-get update -y
+  - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip -y
   - make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$HOME/local/nvim install
   - cd $HOME/local && tar cfz nvim-master.tar.gz nvim
 
