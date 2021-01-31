@@ -29,8 +29,8 @@ steps:
   - cd source
   - apt-get update -y
   - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip -y
-  - make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$HOME/local/nvim install
-  - cd $HOME/local && tar cfz nvim-master.tar.gz nvim
+  - make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=source/nvim install
+  - cfz nvim-master.tar.gz nvim
 
 
 - name: publish
@@ -38,6 +38,6 @@ steps:
   settings:
     api_key:
       from_secret: gh_token
-    files: $HOME/local/nvim-master.tar.gz
+    files: source/nvim-master.tar.gz
   when:
     event: tag
