@@ -13,7 +13,7 @@ trigger:
       - promote
  
 image_pull_secrets:
-- labdkjson 
+- ghdkjson
 
 steps:
 - name: fetch
@@ -31,12 +31,13 @@ steps:
   commands:
   - cd source
   - gradle assembleDebug
-
-- name: publish
-  image: plugins/github-release
-  settings:
-    api_key:
-      from_secret: gh_token
-    files: source/app/build/outputs/apk/debug/app-debug.apk
   when:
     event: tag
+
+- name: publish
+  image: docker.pkg.github.com/tomasky/drone-github-release/main:master 
+  settings:
+    repo: scalandk
+    api_key:
+      from_secret: gh_token
+    files: source/app/build.gradle
