@@ -18,25 +18,26 @@ image_pull_secrets:
 steps:
 - name: fetch
   image: alpine/git
-  environment:
-    subgit:
-      from_secret: gradgit
 
   commands:
   #- git fetch --tags
-  - git clone $subgit source
+  - git clone https://github.com/neovim/neovim source
   
-- name: test
-  image: registry.gitlab.com/weezway/dkpkgs:android 
+- name: build
+  image: i386/ubuntu:16.04
   commands:
   - cd source
-  - gradle assembleDebug
+  - sudo apt-get update -y
+  - sudo apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip -y
+  - make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=$HOME/local/nvim install
+  - cd $HOME/local && tar cfz nvim-master.tar.gz nvim
+
 
 - name: publish
   image: plugins/github-release
   settings:
     api_key:
       from_secret: gh_token
-    files: source/app/build/outputs/apk/debug/app-debug.apk
+    files: $HOME/local/nvim-master.tar.gz
   when:
     event: tag
