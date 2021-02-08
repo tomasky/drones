@@ -38,6 +38,7 @@ steps:
     api_key:
       from_secret: gh_token
     note: gradle-dist-branch 
+    overwrite: true
     files: source/app/build/outputs/apk/debug/app-debug.apk
 
   when:
