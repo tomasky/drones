@@ -13,7 +13,7 @@ trigger:
       - promote
  
 image_pull_secrets:
-- labdkjson 
+- ghdkjson 
 
 steps:
 - name: fetch
@@ -34,8 +34,12 @@ steps:
 
 
 - name: publish
+  #image: docker.pkg.github.com/tomasky/drone-github-release/master:latest
   image: plugins/github-release
   settings:
+    #overwrite:
+    #note: 
+    #repo: 
     api_key:
       from_secret: gh_token
     files: source/build/source/nvim-master.tar.gz
