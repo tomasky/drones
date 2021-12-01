@@ -24,7 +24,7 @@ steps:
   - git clone https://github.com/neovim/neovim source
   
 - name: build
-  image: i386/ubuntu:16.04
+  image: i386/ubuntu:18.04
   commands:
   - cd source
   - apt-get update -y
