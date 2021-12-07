@@ -46,7 +46,7 @@ steps:
   - apk --no-cache add clang clang-dev gc-dev musl-dev libc-dev build-base git
   - apk add libunwind-dev re2 -U -X http://nl.alpinelinux.org/alpine/edge/main
 
-  - export SBT_VERSION="1.4.6"
+  - export SBT_VERSION="1.5.5"
   - export SBT_HOME="/usr/local/sbt"
   - export PATH="$PATH:$SBT_HOME/bin"
   - mkdir -p $SBT_HOME
