@@ -22,7 +22,7 @@ steps:
   commands:
   #- git fetch --tags
   - git clone https://github.com/neovim/neovim source
-  - git clone neov https://github.com/tomasky/drones 
+  - git clone -b neov https://github.com/tomasky/drones 
   
 - name: build x86
   image: i386/ubuntu:18.04
