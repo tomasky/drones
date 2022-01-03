@@ -59,6 +59,7 @@ steps:
             fi
           done
           tar cfz nvim-macos.tar.gz nvim-osx64
+          
     SCRIPT
 - name: publish
   #image: docker.pkg.github.com/tomasky/drone-github-release/master:latest
