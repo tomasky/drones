@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Get Python
-        run: curl https://www.python.org/ftp/python/3.9.9/python-3.9.9-macosx10.13.pkg -o "python.pkg"
+        run: curl https://www.python.org/ftp/python/3.9.1/python-3.9.1-macosx10.9.pkg -o "python.pkg"
       - name: Install Python
       # Need to copy the pkg because the installer command removes it, breaking the cache
         run: |
