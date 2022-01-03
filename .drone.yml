@@ -35,32 +35,29 @@ steps:
 - name: build macos10.13
   image: macos:10.13
   commands: 
-  - >
-    bash -s <<SCRIPT
-      cd source
-      brew update >/dev/null
-      brew install automake ninja
-      printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
-      make CMAKE_BUILD_TYPE=${NVIM_BUILD_TYPE} CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH= -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13"
-      make DESTDIR="build/source/release/nvim-osx64" install
+  -  cd source
+  -    brew update >/dev/null
+  -    brew install automake ninja
+  -    printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
+  -    make CMAKE_BUILD_TYPE=${NVIM_BUILD_TYPE} CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH= -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13"
+  -    make DESTDIR="build/source/release/nvim-osx64" install
   
-          cd "build/source/release"
-          mkdir -p nvim-osx64/libs
-          libs=($(otool -L nvim-osx64/bin/nvim | sed 1d | sed -E -e 's|^[[:space:]]*||' -e 's| .*||'))
-          echo "libs:"
-          for lib in "${libs[@]}"; do
-            if echo "$lib" | grep -q -E 'libSystem|CoreFoundation' 2>/dev/null; then
-              echo "  [skipped] $lib"
-            else
-              echo "  $lib"
-              relname="libs/${lib##*/}"
-              cp -L "$lib" "nvim-osx64/$relname"
-              install_name_tool -change "$lib" "@executable_path/../$relname" nvim-osx64/bin/nvim
-            fi
-          done
+  -       cd "build/source/release"\
+          mkdir -p nvim-osx64/libs\
+          libs=($(otool -L nvim-osx64/bin/nvim | sed 1d | sed -E -e 's|^[[:space:]]*||' -e 's| .*||'))\
+          echo "libs:"\
+          for lib in "${libs[@]}"; do\
+            if echo "$lib" | grep -q -E 'libSystem|CoreFoundation' 2>/dev/null; then\
+              echo "  [skipped] $lib"\
+            else\
+              echo "  $lib"\
+              relname="libs/${lib##*/}"\
+              cp -L "$lib" "nvim-osx64/$relname"\
+              install_name_tool -change "$lib" "@executable_path/../$relname" nvim-osx64/bin/nvim\
+            fi\
+          done\
           tar cfz nvim-macos.tar.gz nvim-osx64
-          
-    SCRIPT
+     
 - name: publish
   #image: docker.pkg.github.com/tomasky/drone-github-release/master:latest
   image: plugins/github-release
