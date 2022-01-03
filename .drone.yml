@@ -34,13 +34,15 @@ steps:
 
 - name: build macos10.13
   image: macos:10.13
-  commands: |
-   cd source
-   brew update >/dev/null
-    brew install automake ninja
-    printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
-    make CMAKE_BUILD_TYPE=${NVIM_BUILD_TYPE} CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH= -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13"
-    make DESTDIR="build/source/release/nvim-osx64" install
+  commands: 
+  - >
+    bash -s <<SCRIPT
+      cd source
+      brew update >/dev/null
+      brew install automake ninja
+      printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
+      make CMAKE_BUILD_TYPE=${NVIM_BUILD_TYPE} CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH= -DCMAKE_OSX_DEPLOYMENT_TARGET=10.13"
+      make DESTDIR="build/source/release/nvim-osx64" install
   
           cd "build/source/release"
           mkdir -p nvim-osx64/libs
@@ -57,7 +59,7 @@ steps:
             fi
           done
           tar cfz nvim-macos.tar.gz nvim-osx64
-         
+    SCRIPT
 - name: publish
   #image: docker.pkg.github.com/tomasky/drone-github-release/master:latest
   image: plugins/github-release
