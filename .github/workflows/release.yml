@@ -16,8 +16,15 @@ on:
 jobs:
  
   macOS:
-    runs-on: macos-10.13
+    runs-on: macos-10.15
     steps:
+      - uses: actions/checkout@v2
+      - name: Get Python
+        run: curl https://www.python.org/ftp/python/3.9.9/python-3.9.9-macosx10.13.pkg -o "python.pkg"
+      - name: Install Python
+      # Need to copy the pkg because the installer command removes it, breaking the cache
+        run: |
+         sudo installer -pkg python.pkg -target /
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
