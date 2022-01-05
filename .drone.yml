@@ -21,7 +21,7 @@ steps:
 
   commands:
   #- git fetch --tags
-  - git clone --recursive https://github.com/uNetworking/uWebSockets.js.git
+  - git clone --recursive https://github.com/uNetworking/uWebSockets.js.git source
   
 - name: build
   image: i386/ubuntu:16.04
