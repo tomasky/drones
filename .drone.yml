@@ -46,6 +46,5 @@ steps:
       from_secret: gh_token
     files: 
     - source/build/source/nvim-master.tar.gz
-    - source/build/source/release/nvim-macos.tar.gz
   when:
     event: tag
