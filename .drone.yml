@@ -28,7 +28,8 @@ steps:
   commands:
   - cd source
   - apt-get update -y
-  - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip clang -y
+  - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip clang-8 -y
+  - ln -s /usr/bin/clang /usr/bin/clang-8.0 ;ln -s /usr/bin/clang++ /usr/bin/clang++-8.0
   - make
 
 
