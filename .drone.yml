@@ -21,13 +21,13 @@ steps:
 
   commands:
   #- git fetch --tags
-  - cd /home
+ 
   - git clone --recursive https://github.com/uNetworking/uWebSockets.js.git source
   
 - name: build
   image: i386/alpine
   commands:
-  - cd source
+  - cd source ;pwd
   - apk update
   - apk add alpine-sdk build-base clang libc6-compat 
   
@@ -43,6 +43,6 @@ steps:
     #repo: 
     api_key:
       from_secret: gh_token
-    files: /home/source/dist/*.node
+    files:  source/dist/*.node
   when:
     event: tag
