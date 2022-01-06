@@ -27,7 +27,7 @@ steps:
 - name: build
   image: i386/alpine
   commands:
-  - cd /home/source
+  - cd source
   - apk update
   - apk add alpine-sdk build-base clang libc6-compat 
   
