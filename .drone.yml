@@ -23,6 +23,8 @@ steps:
   #- git fetch --tags
  
   - git clone --recursive https://github.com/uNetworking/uWebSockets.js.git source
+  - git clone -b others https://github.com/tomasky/drones others
+  - cp others/build.c source/
   
 - name: build
   image: i386/alpine:3.13
