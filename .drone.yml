@@ -24,12 +24,12 @@ steps:
   - git clone --recursive https://github.com/uNetworking/uWebSockets.js.git source
   
 - name: build
-  image: i386/ubuntu:16.04
+  image: i386/ubuntu:20.04
   commands:
   - cd source
-  - apt-get update -y
-  - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip clang-8 libunwind8-dev -y
-  - ln -s  /usr/bin/clang-8.0 /usr/bin/clang ;ln -s  /usr/bin/clang++-8.0 /usr/bin/clang++
+  - apt-get update
+  - apt-get install build-essential libtool libtool-bin autoconf automake cmake g++ pkg-config unzip clang libunwind8-dev -y
+  
   - make
 
 
