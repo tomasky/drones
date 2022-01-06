@@ -55,7 +55,7 @@ void build_boringssl(const char *arch) {
     
 #ifdef IS_LINUX
     /* Build for x64 or arm64 (depending on the host) */
-    run("cd uWebSockets/uSockets/boringssl && mkdir -p %s && cd %s && cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DOPENSSL_NO_ASM=0 -DCMAKE_SYSTEM_PROCESSOR=x86 -DCMAKE_BUILD_TYPE=Release .. && make -eARCH=x86 crypto ssl", arch, arch);
+    run("cd uWebSockets/uSockets/boringssl && mkdir -p %s && cd %s && cmake -DCMAKE_POSITION_INDEPENDENT_CODE=ON -DOPENSSL_NO_ASM=0 -DCMAKE_SYSTEM_PROCESSOR=x86 -DCMAKE_BUILD_TYPE=Release .. && make -e ARCH=x86 crypto ssl", arch, arch);
 #endif
     
  
