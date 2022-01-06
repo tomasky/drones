@@ -29,7 +29,7 @@ steps:
   commands:
   - cd source ;pwd
   - apk update
-  - apk add alpine-sdk build-base clang libc6-compat cmake perl openssl
+  - apk add alpine-sdk build-base clang libc6-compat cmake perl openssl libunwind-dev
   
   - make
 
