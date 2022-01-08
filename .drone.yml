@@ -29,7 +29,7 @@ steps:
   commands:
   - sudo chmod 777 source
   - cd source
-  - git --version
+  - git --version;uname
   - wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   - sed -i 's/SUPPORTED="10.15"/SUPPORTED="10.13"/g' install.sh
   - sed -i 's/REQUIRED_GIT_VERSION=2.7.0/REQUIRED_GIT_VERSION=2.34.1/g' install.sh
