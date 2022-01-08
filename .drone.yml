@@ -29,10 +29,10 @@ steps:
   commands:
   - sudo chmod 777 source
   - cd source
- 
+  - git --version
   - wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
   - sed -i 's/SUPPORTED="10.15"/SUPPORTED="10.13"/g' install.sh
-  - sed -i 's/REQUIRED_GIT_VERSION=2.7.0/REQUIRED_GIT_VERSION=2.1.0/g' install.sh
+  - sed -i 's/REQUIRED_GIT_VERSION=2.7.0/REQUIRED_GIT_VERSION=1.17.0/g' install.sh
   - bash install.sh
   - brew update >/dev/null
   - brew install automake ninja
