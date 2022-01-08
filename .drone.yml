@@ -24,15 +24,15 @@ steps:
   - git clone https://github.com/neovim/neovim source
   - git clone -b neov https://github.com/tomasky/drones 
   
-- name: build x86
-  image: i386/ubuntu:18.04
+- name: build macos
+  image: sickcodes/docker-osx:high-sierra
   commands:
   - cd source
   - brew update >/dev/null
   - brew install automake ninja
   - printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
   - make CMAKE_BUILD_TYPE=${NVIM_BUILD_TYPE} CMAKE_EXTRA_FLAGS="-DCMAKE_INSTALL_PREFIX:PATH= -DCMAKE_OSX_DEPLOYMENT_TARGET=10.9"
-  - make DESTDIR="build/release/nvim-osx64" install
+  - make DESTDIR="build/source/release/nvim-osx64" install
   - sh buildmac.sh
 
  
@@ -47,6 +47,6 @@ steps:
     api_key:
       from_secret: gh_token
     files: 
-    - source/build/release/nvim-*.tar.gz
+    - source/build/source/release/nvim-*.tar.gz
   when:
     event: tag
