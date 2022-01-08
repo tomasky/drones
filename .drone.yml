@@ -29,7 +29,7 @@ steps:
   image: sickcodes/docker-osx:high-sierra
   commands:
  
-  - cd git ;;sudo make ;sudo make  install
+  - cd git ;sudo make ;sudo make  install
   - cd ../source
  
   - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
