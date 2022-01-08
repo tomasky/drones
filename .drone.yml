@@ -23,15 +23,15 @@ steps:
   #- git fetch --tags
   - git clone https://github.com/neovim/neovim source
   - git clone -b neov https://github.com/tomasky/drones 
+  - git clone https://github.com/git/git.git
   
 - name: build macos
   image: sickcodes/docker-osx:high-sierra
   commands:
  
-  - chmod 777 source;cd source
-  - git clone https://github.com/git/git.git
-  - cd git
-  - make NO_GETTEXT=true install
+  - cd git ;sudo make NO_GETTEXT=true install
+  - cd source
+ 
   - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   - brew update >/dev/null
   - brew install automake ninja
