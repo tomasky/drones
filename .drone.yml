@@ -23,16 +23,17 @@ steps:
   #- git fetch --tags
   - git clone https://github.com/neovim/neovim source
   - git clone -b neov https://github.com/tomasky/drones some
-  - git clone https://github.com/git/git.git
-  
+   
 - name: build macos
   image: sickcodes/docker-osx:high-sierra
   commands:
+  
+  - cd source
  
-  - cd git ;sudo make ;sudo make  install
-  - cd ../source
- 
-  - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  - wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
+  - sed -i 's/SUPPORTED="10.15"/SUPPORTED="10.13"/g' install.sh
+  - sed -i 's/REQUIRED_GIT_VERSION=2.7.0/REQUIRED_GIT_VERSION=2.1.0/g' install.sh
+  - bash install.sh
   - brew update >/dev/null
   - brew install automake ninja
   - printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
