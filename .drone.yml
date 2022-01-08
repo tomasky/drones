@@ -28,10 +28,7 @@ steps:
   image: sickcodes/docker-osx:high-sierra
   commands:
 
-  - git clone https://github.com/git/git.git
-  - cd git
-  - make NO_GETTEXT=true
-  - make NO_GETTEXT=true install
+  - sudo mv /usr/bin/git /usr/bin/git-apple
   - cd source
   - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   - brew update >/dev/null
