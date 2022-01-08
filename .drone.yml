@@ -27,7 +27,7 @@ steps:
 - name: build macos
   image: sickcodes/docker-osx:high-sierra
   commands:
-  
+  - sudo chmod 777 source
   - cd source
  
   - wget https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh
