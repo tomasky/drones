@@ -28,6 +28,7 @@ steps:
   image: sickcodes/docker-osx:high-sierra
   commands:
   - cd source
+  - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   - brew update >/dev/null
   - brew install automake ninja
   - printf 'NVIM_BUILD_TYPE=Release\n' >> $GITHUB_ENV
