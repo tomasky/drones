@@ -27,9 +27,11 @@ steps:
 - name: build macos
   image: sickcodes/docker-osx:high-sierra
   commands:
-
-  - sudo mv /usr/bin/git /usr/bin/git-apple
-  - cd source
+ 
+  - chmod 777 source;cd source
+  - git clone https://github.com/git/git.git
+  - cd git
+  - make NO_GETTEXT=true install
   - /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
   - brew update >/dev/null
   - brew install automake ninja
