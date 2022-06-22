@@ -8,6 +8,7 @@ clone:
 trigger:
   event:
     include:
+      - cron
       - tag
       - push
       - promote
