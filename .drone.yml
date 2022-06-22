@@ -48,4 +48,6 @@ steps:
     files: 
     - source/build/source/nvim-master.tar.gz
   when:
-    event: tag
+    event: 
+    - tag
+    - cron
