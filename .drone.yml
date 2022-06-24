@@ -8,8 +8,8 @@ clone:
 trigger:
   event:
   - cron
-  - tag
   - push
+  - tag
   - promote
   cron:
   - nightly
