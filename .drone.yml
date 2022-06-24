@@ -7,12 +7,12 @@ clone:
  
 trigger:
   event:
-    - cron
-    - tag
-    - push
-    - promote
-    cron:
-    - nightly
+  - cron
+  - tag
+  - push
+  - promote
+  cron:
+  - nightly
  
 image_pull_secrets:
 - ghdkjson 
