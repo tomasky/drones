@@ -7,12 +7,11 @@ clone:
  
 trigger:
   event:
-    include:
     - tag
     - push
     - promote
     - cron
-    cron:
+  cron:
     - hourly
  
 image_pull_secrets:
