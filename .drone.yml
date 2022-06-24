@@ -11,8 +11,8 @@ trigger:
     - push
     - promote
     - cron
-  cron:
-    - hourly
+    cron:
+      - hourly
  
 image_pull_secrets:
 - ghdkjson 
@@ -50,7 +50,6 @@ steps:
     - source/build/source/nvim-master.tar.gz
   when:
     event: 
-    - tag
-    - cron
-    cron:
-    - nightly
+      - tag
+      - cron
+
