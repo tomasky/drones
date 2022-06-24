@@ -13,7 +13,7 @@ trigger:
     - promote
     - cron
   cron:
-    - hourly
+  - hourly
  
 image_pull_secrets:
 - ghdkjson 
