@@ -13,6 +13,10 @@ trigger:
  
 image_pull_secrets:
 - dockerconfig
+matrix:
+  IMAGE:
+    - dockcross/linux-x86
+    # - dockcross/android-arm64
 
 steps:
 - name: fetch
@@ -23,23 +27,15 @@ steps:
 
   commands:
   #- git fetch --tags
-  - git clone $subgit
-  
-- name: test
-  image: hayd/alpine-deno:1.4.6
-  commands:
-  - deno --version
-  - cd denok && deno cache main.ts
+  - wget https://nim-lang.org/download/nim-1.6.6-linux_x64.tar.xz && tar xvf nim-1.6.6*
+  - git clone https://github.com/nim-lang/nimble out
+
     
-- name: deliver
-  image: sinlead/drone-kubectl
-  settings:
-    kubernetes_server:
-      from_secret: k8s_server
-    kubernetes_cert:
-      from_secret: k8s_cert
-    kubernetes_token:
-      from_secret: k8s_token
+- name: build-x86
+  image: dockcross/linux-x86
   commands:
-  - kubectl apply -f denok/deployment.yml
-    
+  - export PATH=$PWD/nim-1.6.6/bin:$PATH && cd out
+  - echo $CC 
+  - nimble build
+  - nimble build --cc:env
+  - file nimble    
