@@ -9,14 +9,15 @@ trigger:
   event:
     include:
       - push
+      - tag
       - promote
  
 image_pull_secrets:
 - dockerconfig
-matrix:
-  IMAGE:
-    - dockcross/linux-x86
-    # - dockcross/android-arm64
+
+
+environment:
+  biname: nimble
 
 steps:
 - name: fetch
@@ -27,15 +28,47 @@ steps:
 
   commands:
   #- git fetch --tags
-  - wget https://nim-lang.org/download/nim-1.6.6-linux_x64.tar.xz && tar xvf nim-1.6.6*
+  - wget https://nim-lang.org/download/nim-1.6.6-linux_x64.tar.xz 
+  - tar xvf nim-1.6.6*xz && mv nim-1.6.6 nim
   - git clone https://github.com/nim-lang/nimble out
 
-    
-- name: build-x86
-  image: dockcross/linux-x86
+- name: build-x64
+  image: dockcross/linux-x64
   commands:
-  - export PATH=$PWD/nim-1.6.6/bin:$PATH && cd out
+  - export PATH=$PWD/nim/bin:$PATH && cd out
   - echo $CC 
-  - nimble build
-  - nimble build --cc:env
-  - file nimble    
+  - nimble build --passL:-static -o:out-linux-amd64
+  - mv $biname out-linux-amd64
+    
+- name: build-linux-arm64
+  image: dockcross/linux-arm64
+  commands:
+  - export PATH=$PWD/nim/bin:$PATH && cd out
+  - echo $CC 
+  - nimble build --cc:env --os:linux --cpu:arm64 -o:out-linux-arm64
+  - mv $biname out-linux-arm64
+
+- name: build-arm64
+  image: ghcr.io/tomasky/drones/arm64:nim
+  commands:
+  - export PATH=$PWD/nim/bin:$PATH && cd out
+  - echo $CC 
+  - nimble build --cc:env --os:android --cpu:arm64 -o:out-android-arm64
+  - mv $biname out-android-arm64
+
+
+- name: push-coding
+  image: node:slim
+  when:
+    ref:
+    - refs/tags/*
+  environment:
+    arturl:
+      from_secret: arturl
+    artcode:
+      from_secret: artcode
+    out: nimbins.tar.gz
+  commands:
+  - npm install coding-generic -g 
+  - tar zcvf $out out/out-*
+  - coding-generic -u=$artcode --path=$out --registry="$arturl/$out?version=0.0.1" 
