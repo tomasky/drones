@@ -1,74 +1,123 @@
+image: &image rust:latest
+coms: &coms curl -LsSf https://sh.rustup.rs | bash -s -- -y && . "$HOME/.cargo/env" && cd out && apt-get update && apt-get install -y   libglib2.0-dev 
+
+anchor: &anchor
+  image: node:alpine
+  environment:
+    arturl:
+      from_secret: arturl
+    artcode:
+      from_secret: artcode
+  commands:
+  - npm install coding-generic -g
+  - cd out &&  export bin=$(sed -En ':a;N;$!ba;s/.+\[\[bin\]\]\nname\s=\s"(\w+[^"]{1})(.+)/\1/gp' Cargo.toml)
+  - export out=$(cat ../ver).tar.gz
+  - tar zcvf $out target/**/**/$bin
+  - export ver=$(sed -En 's/version\s=\s"(.+)"$/\1/gp' Cargo.toml)
+  - coding-generic -u=$artcode --path=$out --registry="$arturl/$out?version=$ver" 
+
+
 kind: pipeline
 name: default
 type: docker
 
 clone: 
   disable: true
- 
+
 trigger:
-  event:
-    include:
-      - push
-      - tag
-      - promote
- 
+  ref:
+    - refs/tags/rs*
 image_pull_secrets:
 - dockerconfig
-
-
-environment:
-  biname: nimble
 
 steps:
 - name: fetch
   image: alpine/git
   environment:
     subgit:
-      from_secret: subgit
+      from_secret: labgithost
 
   commands:
   #- git fetch --tags
-  - wget https://nim-lang.org/download/nim-1.6.6-linux_x64.tar.xz 
-  - tar xvf nim-1.6.6*xz && mv nim-1.6.6 nim
-  - git clone https://github.com/nim-lang/nimble out
+  - echo $(echo $DRONE_COMMIT_MESSAGE | sed -En 's/ci\((.+)\):\s.+/\1/gp') > ver
+  - git clone $subgit/$(cat ver) out 
 
-- name: build-x64
-  image: dockcross/linux-x64
+- name: build-linux-amd64
+  image: node:slim 
+  failure: ignore
   commands:
-  - export PATH=$PWD/nim/bin:$PATH && cd out
-  - echo $CC 
-  - nimble build --passL:-static -o:out-linux-amd64
-  - mv $biname out-linux-amd64
-    
-- name: build-linux-arm64
-  image: dockcross/linux-arm64
-  commands:
-  - export PATH=$PWD/nim/bin:$PATH && cd out
-  - echo $CC 
-  - nimble build --cc:env --os:linux --cpu:arm64 -o:out-linux-arm64
-  - mv $biname out-linux-arm64
+  - apt update && apt install -y curl  gcc
+  - *coms
+  - cargo build --bins --release --target x86_64-unknown-linux-gnu
 
-- name: build-arm64
-  image: ghcr.io/tomasky/drones/arm64:nim
-  commands:
-  - export PATH=$PWD/nim/bin:$PATH && cd out
-  - echo $CC 
-  - nimble build --cc:env --os:android --cpu:arm64 -o:out-android-arm64
-  - mv $biname out-android-arm64
-
-
-- name: push-coding
-  image: node:slim
+- name: build-android-arm64
+  image: ghcr.io/cross-rs/aarch64-linux-android:edge
+  failure: ignore
   when:
     ref:
-    - refs/tags/*
+    - refs/tags/rs-arm
+  commands:
+  - *coms
+  - rustup target add aarch64-linux-android
+  - cargo build --bins --release --target aarch64-linux-android
+
+- name: build-linux-arm64
+  image: ghcr.io/cross-rs/aarch64-unknown-linux-gnu:edge
+  failure: ignore
+  when:
+    ref:
+    - refs/tags/rs-arm
+  commands:
+  - *coms
+  - rustup target add aarch64-unknown-linux-gnu
+  - cargo build --bins --release --target aarch64-unknown-linux-gnu
+
+    
+- <<: *anchor
+  name: push-coding
+
+
+
+
+
+---
+kind: pipeline
+name: scalan
+type: docker
+clone: 
+  disable: true
+ 
+image_pull_secrets:
+- ghdkjson
+trigger:
+    ref:
+    - refs/tags/scn*
+steps:
+- name: fetch
+  image: alpine/git
+  environment:
+    subgit:
+      from_secret: labgithost
+
+  commands:
+  - echo $(echo $DRONE_COMMIT_MESSAGE | sed -En 's/ci\((.+)\):\s.+/\1/gp') > ver
+  - git clone $subgit/$(cat ver) out 
+  # - git clone https://github.com/i10416/prettytable-native out
+
+- name: build 
+  image: ghcr.io/tomasky/scalandk/image:0.0.1
+  commands:
+    - cd out && sbt 'set scalaVersion:= "2.13.8"' run
+
+- name: push-coding
+  image: node:alpine
   environment:
     arturl:
       from_secret: arturl
     artcode:
       from_secret: artcode
-    out: nimbins.tar.gz
   commands:
-  - npm install coding-generic -g 
-  - tar zcvf $out out/out-*
-  - coding-generic -u=$artcode --path=$out --registry="$arturl/$out?version=0.0.1" 
+  - npm install coding-generic -g  
+  - export out=$(cat ver).tar.gz
+  - cd out && tar zcvf $out target/scala-*/*-out
+  - coding-generic -u=$artcode --path=$out --registry="$arturl/$out?version=$(sed -En 's/version\s:=\s"(.+)"$/\1/gp' build.sbt)" 
