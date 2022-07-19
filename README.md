@@ -1,6 +1,6 @@
 # drones
 
-This is a template @date=
+This is a template @date=2022-07-19_09-25-12
 
 ### scala native deps
 
