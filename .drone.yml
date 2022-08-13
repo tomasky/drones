@@ -29,7 +29,7 @@ steps:
   commands:
   - cd source
   - apt-get update -y
-  - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip -y
+  - apt-get install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip git -y
   - make CMAKE_BUILD_TYPE=Release CMAKE_INSTALL_PREFIX=source/nvim install
   - cd build/source && tar cfz nvim-master.tar.gz nvim
 
