@@ -5,9 +5,8 @@ type: docker
 clone: 
   disable: true
 platform:
-  os: windows
+  os: darwin
   arch: amd64
-  version: 1903
   
 trigger:
   event:
