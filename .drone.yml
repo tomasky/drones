@@ -7,7 +7,7 @@ clone:
 platform:
   os: windows
   arch: amd64
-  version: 1809
+  version: 1903
   
 trigger:
   event:
@@ -29,5 +29,10 @@ steps:
   - ls
   - git clone $subgit
  
-
+steps:
+- name: build
+  image: python:3.11.0rc1-windowsservercore-1903
+  commands:
+  - pip flet nuitka
+  - nuitka3 
     
