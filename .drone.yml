@@ -31,7 +31,7 @@ steps:
  
 steps:
 - name: build
-  image: python:3.11.0rc1-windowsservercore-1903
+  image: python:3.10.6-windowsservercore-1903
   commands:
   - pip flet nuitka
   - nuitka3 
