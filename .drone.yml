@@ -4,7 +4,11 @@ type: docker
 
 clone: 
   disable: true
- 
+platform:
+  os: windows
+  arch: amd64
+  version: 1809
+  
 trigger:
   event:
     include:
@@ -22,24 +26,8 @@ steps:
       from_secret: subgit
 
   commands:
-  #- git fetch --tags
+  - ls
   - git clone $subgit
-  
-- name: test
-  image: hayd/alpine-deno:1.4.6
-  commands:
-  - deno --version
-  - cd denok && deno cache main.ts
-    
-- name: deliver
-  image: sinlead/drone-kubectl
-  settings:
-    kubernetes_server:
-      from_secret: k8s_server
-    kubernetes_cert:
-      from_secret: k8s_cert
-    kubernetes_token:
-      from_secret: k8s_token
-  commands:
-  - kubectl apply -f denok/deployment.yml
+ 
+
     
