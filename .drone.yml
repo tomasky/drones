@@ -21,7 +21,7 @@ steps:
 
   commands:
   #- git fetch --tags
-  - git clone https://github.com/neovim/neovim source
+  - git clone --depth=1 https://github.com/neovim/neovim source
   #- git clone -b neov https://github.com/tomasky/drones 
   
 - name: build x86
